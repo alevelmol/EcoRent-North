@@ -71,10 +71,10 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(error);
     }
 
-    // ✅ Recurso no encontrado
-    @ExceptionHandler(RuntimeException.class)
+    // ✅ Recurso no encontrado (NotFoundException)
+    @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFound(
-            RuntimeException ex,
+            NotFoundException ex,
             HttpServletRequest request) {
 
         ErrorResponse error = new ErrorResponse(

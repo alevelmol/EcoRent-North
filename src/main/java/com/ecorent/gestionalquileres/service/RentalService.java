@@ -3,6 +3,7 @@ package com.ecorent.gestionalquileres.service;
 import com.ecorent.gestionalquileres.entity.*;
 import com.ecorent.gestionalquileres.entity.EquipmentStatus;
 import com.ecorent.gestionalquileres.exception.BusinessException;
+import com.ecorent.gestionalquileres.exception.NotFoundException;
 import com.ecorent.gestionalquileres.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class RentalService {
         }
 
         Equipment equipment = equipmentRepository.findById(equipmentId)
-                .orElseThrow(() -> new BusinessException("Equipo no encontrado"));
+                .orElseThrow(() -> new NotFoundException("Equipo no encontrado"));
 
         if (equipment.getStatus() == EquipmentStatus.MAINTENANCE) {
             throw new BusinessException("Equipo en mantenimiento");
@@ -47,7 +48,7 @@ public class RentalService {
         }
 
         Client client = clientRepository.findByDni(clientDni)
-                .orElseThrow(() -> new BusinessException("Cliente no encontrado"));
+                .orElseThrow(() -> new NotFoundException("Cliente no encontrado"));
 
         long days = ChronoUnit.DAYS.between(start, end) + 1;
 
@@ -68,22 +69,24 @@ public class RentalService {
         return rentalRepository.save(rental);
     }
 
-    // RF-11
     public Rental registerReturn(Long rentalId) {
 
         Rental rental = rentalRepository.findById(rentalId)
-                .orElseThrow(() -> new BusinessException("Alquiler no encontrado"));
+                .orElseThrow(() -> new NotFoundException("Alquiler no encontrado"));
+
+        if (rental.isReturned()) {
+            throw new BusinessException("El alquiler ya fue devuelto");
+        }
 
         rental.setReturned(true);
-
         rental.getEquipment().setStatus(EquipmentStatus.AVAILABLE);
 
         return rental;
     }
+
 
     // RF-06
     public List<Rental> getClientHistory(String dni) {
         return rentalRepository.findByClientDni(dni);
     }
 }
-

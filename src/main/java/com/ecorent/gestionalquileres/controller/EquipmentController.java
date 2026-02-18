@@ -47,6 +47,18 @@ public class EquipmentController {
 
         return ResponseEntity.ok(response);
     }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Equipment> update(@PathVariable Long id,
+                                            @RequestBody Equipment equipment) {
+        return ResponseEntity.ok(equipmentService.updateEquipment(id, equipment));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        equipmentService.deleteEquipment(id);
+        return ResponseEntity.noContent().build();
+    }
 
     @Operation(summary = "Cambiar estado del equipo")
     @PutMapping("/{id}/status")

@@ -1,0 +1,169 @@
+/* =====================================================
+   RESET GLOBAL REAL
+===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+:root {
+  --primary: #2bc44c;
+  --primary-dark: #159c32;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --warning: #f59e0b;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-400: #9ca3af;
+  --gray-700: #374151;
+  --gray-900: #111827;
+  --radius: 8px;
+}
+
+/* =====================================================
+   LAYOUT PRINCIPAL - PANTALLA COMPLETA
+===================================================== */
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw; /* CLAVE para ocupar todo */
+}
+
+/* ================= HEADER ================= */
+
+.header {
+  background: var(--primary);
+  color: white;
+  padding: 20px;
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  padding: 12px;
+  background: white;
+  border-bottom: 1px solid var(--gray-200);
+  flex-shrink: 0;
+}
+
+.navbar button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.navbar button:hover {
+  background: var(--primary-dark);
+}
+
+/* ================= CONTENIDO ================= */
+
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  background-color: var(--gray-100);
+  padding: 30px;
+  width: 100%;
+}
+
+/* =====================================================
+   CONTENEDOR INTERNO
+===================================================== */
+
+/* Ahora sí limitamos SOLO el contenido interno,
+   pero la app sigue ocupando toda la pantalla */
+
+.card {
+  background: white;
+  width: 100%;        /* ocupa todo el ancho disponible */
+  max-width: 1200px;  /* límite profesional */
+  margin: 0 auto;     /* centrado limpio */
+  padding: 30px;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* =====================================================
+   FORMULARIOS
+===================================================== */
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0;
+  border-radius: var(--radius);
+  border: 1px solid var(--gray-200);
+}
+
+/* =====================================================
+   TABLAS
+===================================================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th {
+  background: var(--primary);
+  color: white;
+  padding: 10px;
+}
+
+td {
+  padding: 8px;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+tr:hover {
+  background: #fafafa;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    flex-direction: column;
+  }
+
+  .content-area {
+    padding: 15px;
+  }
+
+  .card {
+    padding: 15px;
+  }
+}

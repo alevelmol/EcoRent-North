@@ -7,6 +7,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,4 +63,9 @@ public class RentalController {
                 )
         );
     }
+    @GetMapping("/{dni}/rentals")
+    public ResponseEntity<List<Rental>> getClientHistory(@PathVariable String dni) {
+        return ResponseEntity.ok(rentalService.getClientHistory(dni));
+    }
+
 }

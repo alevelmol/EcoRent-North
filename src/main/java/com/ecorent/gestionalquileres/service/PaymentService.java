@@ -3,6 +3,7 @@ package com.ecorent.gestionalquileres.service;
 import com.ecorent.gestionalquileres.entity.Payment;
 import com.ecorent.gestionalquileres.entity.Rental;
 import com.ecorent.gestionalquileres.exception.BusinessException;
+import com.ecorent.gestionalquileres.exception.NotFoundException;
 import com.ecorent.gestionalquileres.repository.PaymentRepository;
 import com.ecorent.gestionalquileres.repository.RentalRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class PaymentService {
     public Payment registerPayment(Long rentalId, BigDecimal amount) {
 
         Rental rental = rentalRepository.findById(rentalId)
-                .orElseThrow(() -> new BusinessException("Alquiler no encontrado"));
+                .orElseThrow(() -> new NotFoundException("Alquiler no encontrado"));
 
         BigDecimal paid = paymentRepository.sumPaymentsByRentalId(rentalId);
 
@@ -45,7 +46,7 @@ public class PaymentService {
     public String getPaymentStatus(Long rentalId) {
 
         Rental rental = rentalRepository.findById(rentalId)
-                .orElseThrow(() -> new BusinessException("Alquiler no encontrado"));
+                .orElseThrow(() -> new NotFoundException("Alquiler no encontrado"));
 
         BigDecimal paid = paymentRepository.sumPaymentsByRentalId(rentalId);
 

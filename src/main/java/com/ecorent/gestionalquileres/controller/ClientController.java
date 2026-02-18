@@ -46,6 +46,19 @@ public class ClientController {
                 )
         );
     }
+    
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Client> update(@PathVariable Long id,
+                                         @RequestBody Client client) {
+        return ResponseEntity.ok(clientService.updateClient(id, client));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        clientService.deleteClient(id);
+        return ResponseEntity.noContent().build();
+    }
 
     @Operation(summary = "Consultar historial de alquileres por DNI")
     @GetMapping("/{dni}/rentals")
@@ -69,4 +82,9 @@ public class ClientController {
 
         return ResponseEntity.ok(rentals);
     }
+    @GetMapping
+    public ResponseEntity<List<Client>> findAll() {
+        return ResponseEntity.ok(clientService.findAll());
+    }
+
 }

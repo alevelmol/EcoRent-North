@@ -35,4 +35,8 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
     Double calculateIncomeBetween(LocalDate start, LocalDate end);
     
     List<Rental> findByClientDni(String dni);
+    
+    boolean existsByEquipmentId(Long id);
+    
+    boolean existsByClientId(Long id);
 }
