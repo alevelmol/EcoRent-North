@@ -77,7 +77,9 @@ function RentalView() {
         onChange={e => setForm({ ...form, endDate: e.target.value })}
       />
 
-      <button onClick={handleSubmit}>Registrar Alquiler</button>
+      <button className="primary" onClick={handleSubmit}>
+        Registrar Alquiler
+      </button>
 
       <hr />
 
@@ -95,7 +97,9 @@ function RentalView() {
         ))}
       </select>
 
-      <button onClick={searchRentals}>Buscar</button>
+      <button className="secondary" onClick={searchRentals}>
+        Buscar
+      </button>
 
       <hr />
 

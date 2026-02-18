@@ -58,6 +58,7 @@ function PaymentSection() {
         />
 
         <button
+          className="primary"
           onClick={handleRegisterPayment}
           style={{ marginLeft: "10px" }}
         >
@@ -65,15 +66,10 @@ function PaymentSection() {
         </button>
       </div>
 
-      {loading && <p>Procesando pago...</p>}
+      {loading && <p className="helper-text">Procesando pago...</p>}
 
       {paymentResult && (
-        <div style={{
-          marginTop: "15px",
-          background: "#f5f5f5",
-          padding: "12px",
-          borderRadius: "6px"
-        }}>
+        <div className="payment-summary">
           <h3>Pago Registrado</h3>
 
           <p><strong>ID Pago:</strong> {paymentResult.id}</p>

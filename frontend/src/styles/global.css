@@ -1,12 +1,13 @@
 /* =====================================================
-   RESET GLOBAL REAL
+   RESET GLOBAL
 ===================================================== */
 
 * {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -19,109 +20,495 @@ html, body {
 }
 
 /* =====================================================
-   VARIABLES
+   TEMA JARDINERÍA - VARIABLES
 ===================================================== */
 
 :root {
-  --primary: #2bc44c;
-  --primary-dark: #159c32;
+  --primary: #2f9e44;          /* verde hoja principal */
+  --primary-dark: #237636;
+  --primary-soft: #e3f5e9;
+
+  --accent: #22c55e;           /* retoño */
+  --accent-soft: #bbf7d0;
+
   --success: #16a34a;
   --danger: #dc2626;
   --warning: #f59e0b;
+
+  --soil: #a16207;
+  --sky: #e0f2fe;
+
+  --gray-50: #f9fafb;
   --gray-100: #f3f4f6;
   --gray-200: #e5e7eb;
   --gray-400: #9ca3af;
   --gray-700: #374151;
   --gray-900: #111827;
-  --radius: 8px;
+
+  --radius: 12px;
+  --radius-pill: 999px;
+
+  --shadow-soft: 0 18px 40px rgba(15, 118, 110, 0.18);
+  --shadow-subtle: 0 10px 25px rgba(15, 118, 110, 0.08);
 }
 
 /* =====================================================
-   LAYOUT PRINCIPAL - PANTALLA COMPLETA
+   BASE TIPOGRAFÍA
 ===================================================== */
 
-.app-layout {
+body {
+  color: var(--gray-900);
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  color: #052e16;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+p {
+  margin: 0 0 8px;
+  color: var(--gray-700);
+}
+
+/* =====================================================
+   LAYOUT APP
+===================================================== */
+
+.app-container {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100vw; /* CLAVE para ocupar todo */
+  background:
+    radial-gradient(circle at 0% 0%, rgba(110, 231, 183, 0.18), transparent 55%),
+    radial-gradient(circle at 100% 100%, rgba(74, 222, 128, 0.18), transparent 55%),
+    linear-gradient(180deg, #f5faf5 0%, #edf7ee 45%, #f5faf5 100%);
 }
 
-/* ================= HEADER ================= */
+.main-content {
+  flex: 1;
+  padding: 24px 24px 32px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto;
+}
+
+.main-content > .card {
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* =====================================================
+   HEADER (CINTURÓN SUPERIOR)
+===================================================== */
 
 .header {
-  background: var(--primary);
-  color: white;
-  padding: 20px;
-  font-size: 22px;
-  font-weight: 600;
-  text-align: center;
-  flex-shrink: 0;
+  position: relative;
+  padding: 18px 32px 20px;
+  color: #f0fdf4;
+  background: linear-gradient(
+    120deg,
+    var(--primary) 0%,
+    var(--primary-dark) 45%,
+    #14532d 100%
+  );
+  box-shadow: 0 14px 38px rgba(21, 128, 61, 0.45);
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
+  overflow: hidden;
 }
 
-/* ================= NAVBAR ================= */
+.header::before,
+.header::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(187, 247, 208, 0.92) 0%, transparent 60%);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.header::before {
+  width: 260px;
+  height: 260px;
+  top: -110px;
+  right: -40px;
+  animation: floatLeaf 18s ease-in-out infinite alternate;
+}
+
+.header::after {
+  width: 220px;
+  height: 220px;
+  bottom: -140px;
+  left: -40px;
+  animation: floatLeaf 22s ease-in-out infinite alternate-reverse;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 26px;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 8px rgba(15, 23, 42, 0.55);
+}
+
+.header span {
+  position: relative;
+  display: inline-flex;
+  margin-top: 4px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(22, 163, 74, 0.22);
+  border: 1px solid rgba(190, 242, 100, 0.6);
+  backdrop-filter: blur(6px);
+}
+
+/* =====================================================
+   NAVBAR (VISTAS)
+===================================================== */
 
 .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  margin: 0 18px;
+  margin-top: -18px;
+  padding: 10px 14px;
   display: flex;
   gap: 10px;
   justify-content: center;
-  padding: 12px;
-  background: white;
-  border-bottom: 1px solid var(--gray-200);
-  flex-shrink: 0;
+  background: rgba(248, 250, 252, 0.94);
+  backdrop-filter: blur(14px);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 18px 36px rgba(15, 118, 110, 0.22);
 }
 
-.navbar button {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 8px 14px;
+/* Estilo base de botones (se puede reutilizar en otros lados) */
+button {
   border-radius: var(--radius);
+  border: 1px solid transparent;
+  padding: 0.55rem 1.15rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  background-color: #ffffff;
+  color: var(--gray-800);
   cursor: pointer;
-  transition: 0.2s;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    filter 0.18s ease;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.16);
+  filter: brightness(1.02);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Botones del navbar con forma de píldora */
+.navbar button {
+  position: relative;
+  border-radius: var(--radius-pill);
+  padding-inline: 1.2rem;
+  background: linear-gradient(145deg, #ecfdf3, #e0f2fe);
+  color: #166534;
+  border-color: rgba(134, 239, 172, 0.7);
+  box-shadow: 0 6px 18px rgba(22, 163, 74, 0.18);
 }
 
 .navbar button:hover {
-  background: var(--primary-dark);
+  background: linear-gradient(145deg, #dcfce7, #bae6fd);
 }
 
-/* ================= CONTENIDO ================= */
-
-.content-area {
-  flex: 1;
-  overflow-y: auto;
-  background-color: var(--gray-100);
-  padding: 30px;
-  width: 100%;
+/* Activo = vista actual */
+.navbar button.active {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #ecfdf5;
+  border-color: rgba(190, 242, 100, 0.9);
+  box-shadow: 0 10px 26px rgba(22, 163, 74, 0.55);
 }
 
 /* =====================================================
-   CONTENEDOR INTERNO
+   CARD CONTENEDORA DE CADA PANTALLA
 ===================================================== */
 
-/* Ahora sí limitamos SOLO el contenido interno,
-   pero la app sigue ocupando toda la pantalla */
-
 .card {
-  background: white;
-  width: 100%;        /* ocupa todo el ancho disponible */
-  max-width: 1200px;  /* límite profesional */
-  margin: 0 auto;     /* centrado limpio */
-  padding: 30px;
-  border-radius: var(--radius);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  position: relative;
+  background: radial-gradient(circle at top left, rgba(190, 242, 100, 0.2), transparent 55%),
+    #ffffff;
+  width: 100%;
+  max-width: 1200px;
+  margin: 16px auto 0;
+  padding: 26px 26px 24px;
+  border-radius: 24px;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  border: 1px solid rgba(209, 250, 229, 0.8);
+  animation: cardFadeIn 420ms ease-out forwards;
+  opacity: 0;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent), var(--sky));
+  opacity: 0.9;
+}
+
+/* Título y descripción interna de la card */
+.card h2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.card h2::after {
+  content: "";
+  width: 42px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--accent), transparent);
+}
+
+.card hr {
+  border: none;
+  border-top: 1px dashed rgba(148, 163, 184, 0.4);
+  margin: 18px 0;
 }
 
 /* =====================================================
    FORMULARIOS
 ===================================================== */
 
-input, select {
+input,
+select {
   width: 100%;
-  padding: 8px;
+  padding: 9px 11px;
   margin: 6px 0;
-  border-radius: var(--radius);
+  border-radius: 999px;
   border: 1px solid var(--gray-200);
+  background-color: rgba(255, 255, 255, 0.92);
+  font-size: 0.95rem;
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    background-color 0.16s ease,
+    transform 0.12s ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: rgba(34, 197, 94, 0.8);
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.22);
+  background-color: #ffffff;
+  transform: translateY(-0.5px);
+}
+
+/* Grid de formularios (equipos) */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px 14px;
+  margin-bottom: 10px;
+}
+
+/* =====================================================
+   BOTONES DE ACCIÓN (COLORES)
+===================================================== */
+
+button.primary,
+button.success {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #ecfdf5;
+  border-color: rgba(16, 185, 129, 0.7);
+}
+
+button.secondary {
+  background: #f1f5f9;
+  color: #065f46;
+  border-color: rgba(148, 163, 184, 0.7);
+}
+
+button.danger {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  color: #fef2f2;
+  border-color: rgba(239, 68, 68, 0.9);
+}
+
+button.warning {
+  background: linear-gradient(135deg, #facc15, #ea580c);
+  color: #451a03;
+  border-color: rgba(250, 204, 21, 0.9);
+}
+
+/* =====================================================
+   DASHBOARD (ESTADÍSTICAS)
+===================================================== */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.stat-box {
+  position: relative;
+  padding: 16px 16px 14px;
+  border-radius: 20px;
+  background: #f9fafb;
+  box-shadow: var(--shadow-subtle);
+  overflow: hidden;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  transform-origin: center;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+}
+
+.stat-box::before {
+  content: "";
+  position: absolute;
+  right: -18px;
+  top: -18px;
+  width: 70px;
+  height: 70px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95), transparent 60%);
+  opacity: 0.7;
+}
+
+.stat-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 38px rgba(15, 118, 110, 0.28);
+  border-color: rgba(22, 163, 74, 0.5);
+}
+
+.stat-box h3 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.stat-box p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* variantes por tipo */
+.stat-box.primary {
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+}
+
+.stat-box.success {
+  background: linear-gradient(135deg, #ecfeff, #ccfbf1);
+}
+
+.stat-box.danger {
+  background: linear-gradient(135deg, #fee2e2, #fecaca);
+}
+
+/* =====================================================
+   EQUIPOS (LISTA DE TARJETAS)
+===================================================== */
+
+.equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.equipment-card {
+  position: relative;
+  padding: 14px 14px 12px;
+  border-radius: 20px;
+  background: radial-gradient(circle at top, rgba(190, 242, 100, 0.25), transparent 55%),
+    #f9fafb;
+  border: 1px solid rgba(209, 250, 229, 0.8);
+  box-shadow: var(--shadow-subtle);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.equipment-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 32px rgba(15, 118, 110, 0.26);
+  border-color: rgba(34, 197, 94, 0.7);
+}
+
+.equipment-card h4 {
+  margin: 0 0 2px;
+  font-size: 15px;
+}
+
+.equipment-card p {
+  margin: 2px 0;
+  font-size: 13px;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+/* Etiquetas de estado inspiradas en hojas */
+.equipment-card .status-AVAILABLE,
+.equipment-card .status-MAINTENANCE,
+.equipment-card .status-RENTED {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 6px;
+  border: 1px solid transparent;
+}
+
+.equipment-card .status-AVAILABLE {
+  background: rgba(220, 252, 231, 0.9);
+  color: #166534;
+  border-color: rgba(34, 197, 94, 0.8);
+}
+
+.equipment-card .status-MAINTENANCE {
+  background: rgba(254, 249, 195, 0.9);
+  color: #854d0e;
+  border-color: rgba(234, 179, 8, 0.9);
+}
+
+.equipment-card .status-RENTED {
+  background: rgba(254, 226, 226, 0.9);
+  color: #b91c1c;
+  border-color: rgba(248, 113, 113, 0.9);
 }
 
 /* =====================================================
@@ -131,39 +518,133 @@ input, select {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 15px;
+  margin-top: 12px;
+  background-color: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--shadow-subtle);
+}
+
+thead {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #ecfdf5;
+}
+
+th,
+td {
+  padding: 10px 12px;
+  font-size: 0.9rem;
 }
 
 th {
-  background: var(--primary);
-  color: white;
-  padding: 10px;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-td {
-  padding: 8px;
-  border-bottom: 1px solid var(--gray-200);
+tbody tr:nth-child(even) {
+  background-color: #f9fafb;
 }
 
-tr:hover {
-  background: #fafafa;
+tbody tr:hover {
+  background-color: #ecfdf3;
+}
+
+/* =====================================================
+   SECCIONES DE PAGO / MENSAJES
+===================================================== */
+
+.payment-summary {
+  margin-top: 15px;
+  background: linear-gradient(135deg, #ecfdf5, #ccfbf1);
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(34, 197, 94, 0.5);
+  box-shadow: var(--shadow-subtle);
+}
+
+.helper-text {
+  font-size: 13px;
+  color: var(--gray-700);
+}
+
+/* =====================================================
+   ANIMACIONES
+===================================================== */
+
+@keyframes floatLeaf {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(8px, 6px, 0) rotate(3deg);
+  }
+  100% {
+    transform: translate3d(-6px, -4px, 0) rotate(-2deg);
+  }
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* =====================================================
    RESPONSIVE
 ===================================================== */
 
-@media (max-width: 768px) {
-
-  .navbar {
-    flex-direction: column;
+@media (max-width: 900px) {
+  .header {
+    padding-inline: 18px;
   }
 
-  .content-area {
-    padding: 15px;
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .navbar {
+    margin-inline: 12px;
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+
+  .navbar button {
+    flex: 1 1 auto;
+    min-width: 110px;
+  }
+
+  .main-content {
+    padding: 18px 14px 26px;
   }
 
   .card {
-    padding: 15px;
+    padding: 20px 16px 18px;
+    border-radius: 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  table {
+    font-size: 0.8rem;
+  }
+
+  th,
+  td {
+    padding: 8px 10px;
   }
 }

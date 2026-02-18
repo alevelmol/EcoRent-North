@@ -61,7 +61,9 @@ function ClientView() {
         onChange={e => setForm({ ...form, email: e.target.value })}
       />
 
-      <button onClick={handleSubmit}>Registrar Cliente</button>
+      <button className="primary" onClick={handleSubmit}>
+        Registrar Cliente
+      </button>
 
       <hr />
 
